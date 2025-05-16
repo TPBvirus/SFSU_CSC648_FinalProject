@@ -1,0 +1,101 @@
+<!--
+File Name:  about_us.ejs
+Course: CSC 648
+Author:  Team 7    
+Last-Updated:  12/17/2024
+Description: About Us Page which lists all Team 7 project collaborators.
+Editors: Jaylin Jack & Suzanna Li
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X937XJ9BX8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X937XJ9BX8');
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>About Us</title>
+    <!-- Including the stylesheet -->
+    <link rel="stylesheet" href="../src/stylesheets/about_us_stylesheet.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="../src/functions/searchFunctions.js"></script>
+</head>
+<body>
+    <div class = "header">
+        <img src = "../images/logo.png" width="500" height="150">
+        <h1 class = "title">About Us</h1>
+        <h5 class = "disclaimer">"SFSU Software Engineering Project CSC 648-848, Fall 2024. For Demonstration Only"</h5>
+    </div>
+<!-- New Nav -->
+<nav>
+    <ul class="navBar">
+        <!-- Search Bar and Button -->
+        <li><a href="/"><i class="fa-solid fa-house" style="font-size: 36px;"></i></a></li><li class="search-container">        
+            <div class="container">
+                <div class="search-container">
+                    <!-- Dropdown for Department -->
+                    <select type="search-dropdown" id="department" onchange="" >
+                        <option value="">All</option>
+                            <% subject.forEach(subject => { %>
+                            <option value="<%= subject.name %>"><%=subject.name %></option>
+                        <% }); %>
+                        
+                    </select>
+                    <!-- Search Button -->
+
+                    <div>
+                        <input type="search-bar" name="query" id="description" placeholder="Search For Tutors" maxlength="40">
+                    </div>
+                </div>
+                <button type="search-btn" onclick="performSearch()">&#x1F50D</button></div>	
+            </div>
+        
+        </li>
+
+        <li><a href="/tutor_application">Tutor Application</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/about-us">About Us</a></li>
+        <!-- If user is logged in -->
+        <!-- Present the logout button -->
+        <% if (user) { %> 
+            <li><a href="/logout">Logout</a></li> 
+        <% } else { %> 
+        <!-- If not then present the login and registration button -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/registration">Register</a></li>
+        <% } %>
+    </ul>
+</nav>
+
+<h2 class = "default">About Us</h2>
+<div id="blurbContainer" class="card">
+    <h2 class="default">Meet the Team</h2>
+    <p class="default">
+        Hover this card to discover the Team!
+    </p>
+    <ul class="hover">
+        <li><a id = "linkThomas" href = "/Thomas_Bercasio">Thomas Bercasio</a>- <b>Team Lead</b> </li>
+        <li><a id = "linkSuzanna" href = "/Suzanna_Li">Suzanna Li</a> - <b>Front End Lead</b> </li>
+        <li><a id = "linkZarko" href = "/Zarko_Cosovic">Zarko Cosovic</a> - <b>Back End Lead</b> </li>
+        <li><a id = "linkKen" href = "/Ken_Chika">Ken Chika</a>- <b>Github Master</b> </li>
+        <li><a id = "linkJaylin" href = "/Jaylin_Jack">Jaylin Jack</a> - <b>Cloud Server Manager & Back End Team Member</b> </li>
+    </ul>
+    <br>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br>
+</body>
+
+
+<footer>
+    <div class = "footer">
+        <div class = "person1"><p><br></p></div>
+    </div>
+</footer>
+</html>

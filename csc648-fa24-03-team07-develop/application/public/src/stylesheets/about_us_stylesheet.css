@@ -1,0 +1,420 @@
+/*
+File Name:  dbFunctions.js
+Course: CSC 648
+Author:  Team 7    
+Last-Updated:  12/01/2024
+Description: Functions used for querying the database
+Editors: Suzanna Li, Thomas Bercasio, & Jaylin Jack
+AI Ownership: Intense Help from ChatGPT
+*/
+
+.header {
+    background-color: purple;
+    color: gold;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.footer {
+    background-color: purple;
+    color: gold;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+}
+
+video {
+  max-width: 100%;  /* Make videos responsive */
+  height: auto;
+}
+
+body {
+  margin: 0;
+    vertical-align: middle;
+    font-family: Arial, sans-serif;
+}
+
+/* Basic grid layout with 3 equal columns */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    padding: 20px;
+  }
+  
+  .grid-item {
+    background-color: #ddd;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+  
+nav {
+    background-color: gold; /* background color */
+    position: relative;
+    width: 100%;
+}
+
+.navBar {
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-start;
+}
+
+
+.navBar li {
+    float: left;
+    position: relative;
+}
+
+.navBar a {
+    display: block;
+    color: purple;
+    text-align: center;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.navBar a:hover {
+    background-color: #8e8a3e;
+}
+
+/* Generated with Chat-GPT */
+button[type="search-btn"] {
+  width: auto;               /* Let width adjust to text size */
+  padding: 10px 20px;        /* Space around the text */
+  height: 3em;               /* Set a fixed height */
+  background-color: #4CAF50; /* Green background */
+  color: white;              /* Text color */
+  border: none;              /* No border */
+  border-radius: 5px;        /* Rounded corners */
+  cursor: pointer;           /* Pointer cursor on hover */
+  margin-left: auto;         /* Center the button */
+  
+  /* Flexbox to center the text */
+  display: inline-flex;
+  justify-content: center;   /* Center text horizontally */
+  align-items: center;       /* Center text vertically */
+  text-align: center;        /* Ensure the text aligns center */
+
+  margin-left: 10%;
+}
+
+select[type="search-dropdown"]{
+  height: 3em; 
+  width: 10%;
+}
+
+/* For responsiveness */
+@media (max-width: 768px) {
+  /* Stack the navigation bar items vertically on mobile */
+
+  nav{
+    padding: 20px;
+  }
+
+  .navBar {
+      flex-direction: column;  /* Stack items vertically */
+      text-align: center;  /* Center align the nav items */
+  }
+
+  /* Ensure the search container behaves well on mobile */
+  .search-container {
+      width: 100%;  /* Take full width */
+      margin-bottom: 20px;  /* Space between search and other items */
+  }
+
+  .search-container .container {
+      width: 100%;  /* Make the container full width */
+      flex-direction: column;  /* Stack select, input, and button vertically */
+  }
+
+
+
+  /* Adjust navigation items on mobile */
+  .navBar li {
+      width: 100%;  /* Make each nav item take up the full width */
+      text-align: center;  /* Center the text */
+  }
+
+  .navBar a {
+      display: block;  /* Make each link a block element to stack them vertically */
+      padding: 10px;
+  }
+
+  /* Stack the grid items vertically on mobile */
+    /* Stack the grid items vertically on mobile */
+    .grid-container {
+        grid-template-columns: 1fr;  /* Change to 1 column on mobile */
+    }
+
+    .grid-item {
+        width: 100%;  /* Ensure each grid item takes up the full width */
+        text-align: left;  /* Align text to the left */
+    }
+
+    /* Adjust images on smaller screens */
+    .grid-item img {
+        width: 80%;  /* Adjust image size to fit better */
+        margin: 10px auto;
+    }
+
+    /* Adjust video size for mobile */
+    .grid-item video {
+        width: 100%;  /* Ensure video fills the width of the container */
+        height: auto;
+    }
+
+    /* Ensure content inside grid items adjusts well */
+    .message-list {
+        padding: 0;
+    }
+
+    .message-item {
+        margin-bottom: 10px;
+        font-size: 14px;  /* Make text slightly smaller for mobile */
+    }
+
+    /* Ensure heading and descriptions are readable on small screens */
+    h2.default {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    /* Optional: Add more padding and spacing adjustments */
+    .grid-item {
+        padding: 15px;
+    }
+
+  /* Optionally, hide the nav items initially and show a hamburger menu */
+  .navBar {
+      display: block;  /* Change the layout to block */
+  }
+
+  /* For smaller screens, you can implement a hamburger-style toggle (optional) */
+  .hamburger {
+      display: block;
+      cursor: pointer;
+      font-size: 30px;
+      text-align: center;
+  }
+
+  .navBar ul {
+      display: none;  /* Hide nav items initially */
+      padding-left: 0;
+  }
+
+  .navBar.open ul {
+      display: block;  /* Show nav items when the menu is open */
+  }
+
+  button[type="search-btn"] {
+    width: 100%;
+  }
+}
+
+/* Card base styling */
+.card {
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transitions */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Blurb text styling */
+.default {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    transition: opacity 0.3s ease-in-out;
+    position: relative; /* Position relative to card */
+    z-index: 1; /* Ensure it's above hover text */
+}
+
+.hover {
+    font-size: 16px;
+    color: #000;
+    line-height: 1.6;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease-in-out;
+    position: absolute; /* Ensure it overlays correctly */
+    top: 0; /* Position it at the same place */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2; /* Ensure it's above default text */
+}
+
+/* Hover effect */
+.card:hover {
+    transform: scale(1.05); /* Scale the card slightly */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    background-color: #fff3e0;
+    cursor: pointer;
+}
+
+.card:hover .default {
+    opacity: 0; /* Hide default text */
+    pointer-events: none; /* Prevent interaction */
+}
+
+.card:hover .hover {
+    opacity: 1; /* Show hover text */
+}
+
+/* Link styling within hover text */
+.hover-link {
+    color: #000; /* Change link color */
+    text-decoration: none; /* Remove underline */
+    display: block; /* Make the entire area clickable */
+    height: 100%; /* Full height of the hover container */
+}
+
+/* Optionally, add a hover effect for the link */
+.hover-link:hover {
+    color: #ff5722; /* Change color on hover */
+}
+/* Navbar container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  /* Styling for the search bar container */
+  .search-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;  /* Pushes the search to the right */
+  }
+  
+  
+  /* Additional styles for navigation links */
+  .navBar {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navBar li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  
+  .navBar li a:hover {
+    color: #4CAF50;
+  }
+
+  .navBar a {
+    text-decoration: none;
+    color: purple; /* Purple color */
+    font-size: 16px;
+}
+
+
+form {
+    margin: 20px auto;
+    max-width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="text"], input[type="password"], input[type="email"],input[type="file"],select[type="form-dropdown"], textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+input[type="search-bar"]{
+    width: 150%;
+    font-size:14pt;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+textarea{
+    height: 125px;
+    resize: none;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active{
+    background-color: #275d2a;
+}
+
+.subject-dropdown {
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    margin-left: 10px;
+    font-size: 16px;
+  }
+
+/* Include the search bar styles */
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+
+input.valid {
+    outline: none; 
+    border: 2px solid green;
+}
+
+input.invalid {
+    outline: none; 
+    border: 2px solid red;
+}
+
+ul {
+    list-style-type: none;  
+  }

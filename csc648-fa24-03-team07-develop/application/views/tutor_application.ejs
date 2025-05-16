@@ -1,0 +1,167 @@
+<!--
+File Name:  tutor_application.ejs
+Course: CSC 648
+Author:  Team 7    
+Last-Updated:  12/17/2024
+Description: Results Page which displays tutors based on user's search query.
+Editors: Jaylin Jack
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X937XJ9BX8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X937XJ9BX8');
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <title>Tutor Application Page</title>
+      <!-- Including the stylesheet -->
+      <link rel="stylesheet" href="../src/stylesheets/about_us_stylesheet.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+      <script src="../src/functions/searchFunctions.js"></script>
+</head>
+
+  <body>
+    <div class = "header">
+        <img src = "../images/logo.png" width="500" height="150">
+        <h1 class = "title">Tutor Application</h1>
+        <h5 class = "disclaimer">"SFSU Software Engineering Project CSC 648-848, Fall 2024. For Demonstration Only"</h5>
+    </div>
+      
+      <!-- Navagtion Bar -->
+      <nav>
+        <ul class="navBar">
+            <li><a href="/"><i class="fa-solid fa-house" style="font-size: 36px;"></i></a></li><li class="search-container">        
+                <div class="container">
+                    <div class="search-container">
+                        <!-- Dropdown for Department -->
+                        <select type="search-dropdown" id="department" onchange="" >
+                            <option value="">All</option>
+                                <% subject.forEach(subject => { %>
+                                <option value="<%= subject.name %>"><%=subject.name %></option>
+                            <% }); %>
+                            
+                        </select>
+                        <!-- Search Button -->
+
+                        <div>
+                            <input type="search-bar" name="query" id="description" placeholder="Search For Tutors" maxlength="40">
+                        </div>
+                    </div>
+                    <button type="search-btn" onclick="performSearch()">&#x1F50D</button></div>	
+                </div>
+            
+            </li>
+
+            <li><a href="/tutor_application">Tutor Application</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+      <h2 class="default">Tutor Application</h2>
+
+      <% if (message) { %>
+          <div class="alert alert-warning">
+            <%= message %>
+          </div>
+        <% } %>
+      
+        <!--With the help from ChatGPT assistance-->
+      <!-- This is the main body of the tutor application -->
+  <form id="applicationForm" method="POST" enctype="multipart/form-data">
+      
+    
+
+    <label for="department">Pick a Subject:</label>
+    <select type="form-dropdown" id="department" name="subject" required>
+        <option value="">Select Department</option>
+        <% subject.forEach(subject => { %>
+            <option value="<%= subject.name %>"><%= subject.name %></option>
+        <% }); %>
+    </select>
+
+
+    <br><br>
+
+    <label for="bio">Bio:</label>
+    <textarea id="bio" name="bio" rows="4" required></textarea>
+    <br><br>
+
+    <label for="course">Courses:</label>
+    <textarea id="course" name="courses" rows="4" required></textarea>
+    <br><br>
+    
+    <br><br>
+    <label for="photo">Upload Photo (50MB Limit. JPEG, PNG only):</label>
+    <input type="file" id="photo" name="photo" accept="image/jpeg, image/png">
+    <br><br>
+
+    <br><br>
+    <label for="video">Upload Video (50MB Limit. MP4 only):</label>
+    <input type="file" id="video" name="video" accept="video/mp4">
+    <br><br>
+
+    <button>Submit</button>
+    <br><br>
+  </form>
+
+  <script>
+  // Get the form element
+  const form = document.querySelectorAll('applicationForm');
+
+  // Handle form submission
+  form.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent the default form submission
+
+
+
+    // Get the files from the form inputs
+    const photoInput = document.getElementById('photo');
+    const videoInput = document.getElementById('video');
+
+    const formData = new FormData(form);
+
+    // Append form fields and files to FormData
+    formData.append('subject', document.getElementById('department').value);
+    formData.append('bio', document.getElementById('bio').value);
+    formData.append('courses', document.getElementById('course').value);
+    
+    // Append the files only if they exist
+    if (photoInput.files[0]) {
+        formData.append('photo', photoInput.files[0]);
+    }
+    if (videoInput.files[0]) {
+        formData.append('video', videoInput.files[0]);
+    }
+
+    // Send the form data via a POST request
+    fetch('/tutor_application', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        
+    })
+    .catch(error => {
+        console.error('Error submitting form:', error);
+    })
+  });
+  </script>
+  
+</body>
+
+<footer>
+    <div class="footer">
+        <div class="person1"><p><br></p></div>
+    </div>
+</footer>   
+</html>

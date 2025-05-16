@@ -1,0 +1,144 @@
+<!--
+----------------------SFSU EXCLUSIVE----------------------------
+File Name:  registration.ejs
+Course: CSC 648
+Author:  Team 7    
+Last-Updated:  12/17/2024
+Description: Registration Page which allows unregistered users to register.
+Editors: Jaylin Jack & Zarko Cosovic
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X937XJ9BX8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-X937XJ9BX8');
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Register</title>
+    <link rel="stylesheet" href="../src/stylesheets/about_us_stylesheet.css"> <!-- Add the common stylesheet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="../src/functions/searchFunctions.js"></script>
+</head>
+<body>
+
+
+    <!-- Navigation Bar -->
+    <div class = "header">
+        <img src = "../images/logo.png" width="500" height="150">
+        <h1 class = "title">Registration</h1>
+        <h5 class = "disclaimer">"SFSU Software Engineering Project CSC 648-848, Fall 2024. For Demonstration Only"</h5>
+    </div>
+    
+    <nav>
+        <ul class="navBar">
+
+            
+            <li><a href="/"><i class="fa-solid fa-house" style="font-size: 36px;"></i></a></li><li class="search-container">        
+                <div class="container">
+                    <div class="search-container">
+                        <!-- Dropdown for Department -->
+                        <select type="search-dropdown" id="department" onchange="" >
+                            <option value="">All</option>
+                                <% subject.forEach(subject => { %>
+                                <option value="<%= subject.name %>"><%=subject.name %></option>
+                            <% }); %>
+                            
+                        </select>
+                        <!-- Search Button -->
+
+                        <div>
+                            <input type="search-bar" name="query" id="description" placeholder="Search For Tutors" maxlength="40">
+                        </div>
+                    </div>
+                    <button type="search-btn" onclick="performSearch()">&#x1F50D</button></div>	
+                </div>
+            
+            </li>
+            <li><a href="/tutor_application">Tutor Application</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <!-- If a user can access registration then they are not logged in -->
+            <li><a href="/login">Login</a></li>
+            <li><a href="/registration">Register</a></li>
+            
+        </ul>
+    </nav>
+
+    <h2 class = "default">Welcome Back!</h2>
+
+    
+    <!--With the help from ChatGPT assistance-->
+    <!-- Registration Form -->
+    <div class="form-container">
+        <form id="registerForm" method="post">
+            
+            
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="newPassword">Password:</label>
+            <input type="password" id="newPassword" name="newPassword" required><br>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+	
+            <label>
+                <input type="checkbox" id="termsCheckbox" name="termsCheckbox" required>
+                I agree to the <a href="terms.html" target="_blank">terms & conditions</a>
+            </label><br>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="login">Login here</a></p>
+    </div>
+
+    <script src="../src/functions/validation.js"></script>
+    <script >
+	/*
+	        document.getElementById("registerForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (!document.getElementById("termsCheckbox").checked) {
+                alert("You must agree to the terms and conditions before registering.");
+                return;
+            }
+        });*/
+            // Handle registration logic here
+
+            
+		const form = document.querySelectorAll("registerForm");
+		form.addEventListener('submit', (event) => {
+			event.preventDefault(); // Prevent the default form submission
+			const formData = new FormData(form);
+			// Send the FormData object to the server
+			fetch('/registration', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				},
+				body: formData
+			})
+			.then(response => {
+			// Handle the server response
+			})
+			.catch(error => {
+			// Handle any errors
+			});
+		});
+    </script>
+</body>
+<footer>
+    <div class="footer">
+        <div class="person1"><p><br></p></div>
+    </div>
+</footer> 
+</html>
